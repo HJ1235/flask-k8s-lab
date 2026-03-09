@@ -13,6 +13,21 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Check secret presence
+        env:
+          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKER_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          if [ -z "$DOCKER_USER" ]; then
+            echo "DOCKERHUB_USERNAME is empty"
+            exit 1
+          fi
+          if [ -z "$DOCKER_TOKEN" ]; then
+            echo "DOCKERHUB_TOKEN is empty"
+            exit 1
+          fi
+          echo "Docker secrets are present"
+
       - name: Docker Login
         uses: docker/login-action@v2
         with:
