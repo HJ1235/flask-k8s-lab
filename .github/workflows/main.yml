@@ -45,5 +45,5 @@ jobs:
           git config --global user.email "bot@github.com"
           git config --global user.name "github-actions[bot]"
           git add deployment.yaml
-          git commit -m "chore: update image tag to ${{ github.sha }} [skip ci]" || echo "No changes to commit"
+          git diff --cached --quiet || git commit -m "chore: update image tag to ${{ github.sha }} [skip ci]"
           git push
