@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: zurang/flask-app:7f7470a87ac44bbc137cb4be0080df274459c8f6
+        image: zurang/flask-app:203f67f56f483c94cce38ed1e28ab3f88adc85cd
         ports:
         - containerPort: 5000
         resources:
