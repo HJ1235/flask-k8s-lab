@@ -13,21 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Check secret presence
-        env:
-          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKER_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-        run: |
-          if [ -z "$DOCKER_USER" ]; then
-            echo "DOCKERHUB_USERNAME is empty"
-            exit 1
-          fi
-          if [ -z "$DOCKER_TOKEN" ]; then
-            echo "DOCKERHUB_TOKEN is empty"
-            exit 1
-          fi
-          echo "Docker secrets are present"
-
       - name: Docker Login
         uses: docker/login-action@v2
         with:
@@ -36,12 +21,12 @@ jobs:
 
       - name: Build and Push
         run: |
-          docker build -t HJ1235/flask-app:${{ github.sha }} .
-          docker push HJ1235/flask-app:${{ github.sha }}
+          docker build -t zurang/flask-app:${{ github.sha }} .
+          docker push zurang/flask-app:${{ github.sha }}
 
       - name: Update Manifest and Push
         run: |
-          sed -i "s|image: HJ1235/flask-app:.*|image: HJ1235/flask-app:${{ github.sha }}|g" deployment.yaml
+          sed -i "s|image: zurang/flask-app:.*|image: zurang/flask-app:${{ github.sha }}|g" deployment.yaml
           git config --global user.email "bot@github.com"
           git config --global user.name "github-actions[bot]"
           git add deployment.yaml
